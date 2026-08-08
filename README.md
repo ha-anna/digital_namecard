@@ -1,5 +1,7 @@
 # ✦ Anna Ha — Interactive NFC Portfolio
 
+![Gif](./public/namecard_eng.gif)
+
 An interactive personal portfolio designed to be discovered through an **NFC business card**.
 
 Instead of a traditional portfolio page, visitors are presented with a small deck of tarot-inspired cards that tell the story of who I am, how I got into software engineering, what I like to build, and where I'm headed next.
