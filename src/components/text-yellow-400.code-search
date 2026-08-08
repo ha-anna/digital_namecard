@@ -1,0 +1,9 @@
+# Query: text-yellow-400
+# ContextLines: 1
+
+1 result - 1 file
+
+app/src/components/TarotCard.tsx:
+  118              <div className="
+  119:               text-yellow-400
+  120                text-sm
