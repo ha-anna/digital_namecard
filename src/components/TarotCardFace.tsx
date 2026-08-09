@@ -120,7 +120,9 @@ export default function TarotCardFace({
           >
             {language === "en"
               ? "Tap to reveal ✦"
-              : "탭해서 펼쳐보기 ✦"}
+              : language === "ko"
+                ? "탭해서 펼쳐보기 ✦"
+                : "Kliknij, żeby odkryć ✦"}
           </p>
 
         </div>
@@ -234,10 +236,10 @@ export default function TarotCardFace({
           "
         >
           {language === "en"
-          ? "Swipe to draw another card"
-          : language === "ko"
-            ? "스와이프해서 다음 카드 보기"
-            : "Przesuń, aby wylosować kolejną kartę"}
+            ? "Swipe to draw another card"
+            : language === "ko"
+              ? "스와이프해서 다음 카드 보기"
+              : "Przesuń, aby wylosować kolejną kartę"}
         </p>
       </div>
     </motion.div>
