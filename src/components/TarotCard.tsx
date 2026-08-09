@@ -13,64 +13,64 @@ export default function TarotCard() {
   const [swipeDirection, setSwipeDirection] = useState(1);
   const [language, setLanguage] = useState<"en" | "ko">("en");
 
-function drawCard(direction: number) {
-  if (isLeaving) return;
+  function drawCard(direction: number) {
+    if (isLeaving) return;
 
-  setSwipeDirection(direction);
-  setIsLeaving(true);
+    setSwipeDirection(direction);
+    setIsLeaving(true);
 
-  setTimeout(() => {
-    setIndex((prev) => (prev + 1) % cards.length);
-    setFlipped(false);
-    setIsLeaving(false);
-  }, 500);
-}
-
-function handleDragEnd(
-  _: MouseEvent | TouchEvent | PointerEvent,
-  info: {
-    offset: { x: number; y: number };
-    velocity: { x: number; y: number };
-  }
-) {
-  setIsDragging(false);
-
-  if (isLeaving) return;
-
-  const { x, y } = info.offset;
-  const { x: velocityX, y: velocityY } = info.velocity;
-
-  const distanceThreshold = 70;
-  const velocityThreshold = 400;
-
-  const horizontalSwipe =
-    Math.abs(x) > distanceThreshold ||
-    Math.abs(velocityX) > velocityThreshold;
-
-  const verticalSwipe =
-    Math.abs(y) > distanceThreshold ||
-    Math.abs(velocityY) > velocityThreshold;
-
-  if (!horizontalSwipe && !verticalSwipe) {
-    return;
+    setTimeout(() => {
+      setIndex((prev) => (prev + 1) % cards.length);
+      setFlipped(false);
+      setIsLeaving(false);
+    }, 500);
   }
 
-  let direction = 1;
+  function handleDragEnd(
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: {
+      offset: { x: number; y: number };
+      velocity: { x: number; y: number };
+    }
+  ) {
+    setIsDragging(false);
 
-  if (Math.abs(x) >= Math.abs(y)) {
-    direction =
-      x >= 0 || velocityX >= 0
-        ? 1
-        : -1;
-  } else {
-    direction =
-      y >= 0 || velocityY >= 0
-        ? 1
-        : -1;
+    if (isLeaving) return;
+
+    const { x, y } = info.offset;
+    const { x: velocityX, y: velocityY } = info.velocity;
+
+    const distanceThreshold = 70;
+    const velocityThreshold = 400;
+
+    const horizontalSwipe =
+      Math.abs(x) > distanceThreshold ||
+      Math.abs(velocityX) > velocityThreshold;
+
+    const verticalSwipe =
+      Math.abs(y) > distanceThreshold ||
+      Math.abs(velocityY) > velocityThreshold;
+
+    if (!horizontalSwipe && !verticalSwipe) {
+      return;
+    }
+
+    let direction = 1;
+
+    if (Math.abs(x) >= Math.abs(y)) {
+      direction =
+        x >= 0 || velocityX >= 0
+          ? 1
+          : -1;
+    } else {
+      direction =
+        y >= 0 || velocityY >= 0
+          ? 1
+          : -1;
+    }
+
+    drawCard(direction);
   }
-
-  drawCard(direction);
-}
 
   return (
     <div className="flex flex-col items-center">
@@ -145,23 +145,23 @@ function handleDragEnd(
               }}
 
               animate={{
-                  y:
-                    isLeaving && distance === 1
-                      ? 0
-                      : distance * -10,
+                y:
+                  isLeaving && distance === 1
+                    ? 0
+                    : distance * -10,
 
-                  scale:
-                    isLeaving && distance === 1
-                      ? 1
-                      : 1 - distance * 0.035,
+                scale:
+                  isLeaving && distance === 1
+                    ? 1
+                    : 1 - distance * 0.035,
 
-                  rotateZ:
-                    isLeaving && distance === 1
-                      ? 0
-                      : distance * -1,
-                }}
+                rotateZ:
+                  isLeaving && distance === 1
+                    ? 0
+                    : distance * -1,
+              }}
 
-             transition={{
+              transition={{
                 duration:
                   isLeaving && distance === 1
                     ? 0.5
@@ -174,71 +174,71 @@ function handleDragEnd(
               {/* ================= CARD ================= */}
 
               <motion.div
-  className="
+                className="
     absolute
     inset-0
     touch-none
   "
-  drag={isActive && !isLeaving}
-  dragElastic={0.35}
-  dragMomentum={false}
+                drag={isActive && !isLeaving}
+                dragElastic={0.35}
+                dragMomentum={false}
 
-  whileDrag={
-    isActive
-      ? {
-          scale: 1.04,
-          rotateZ: 2,
-        }
-      : undefined
-  }
+                whileDrag={
+                  isActive
+                    ? {
+                      scale: 1.04,
+                      rotateZ: 2,
+                    }
+                    : undefined
+                }
 
-  animate={
-    isActive && isLeaving
-      ? {
-          x: swipeDirection * 600,
-          y: -80,
-          rotateZ: swipeDirection * 20,
-          opacity: 0,
-          scale: 0.9,
-        }
-      : {
-          x: 0,
-          y: 0,
-          rotateZ: 0,
-          opacity: 1,
-          scale: 1,
-        }
-  }
+                animate={
+                  isActive && isLeaving
+                    ? {
+                      x: swipeDirection * 600,
+                      y: -80,
+                      rotateZ: swipeDirection * 20,
+                      opacity: 0,
+                      scale: 0.9,
+                    }
+                    : {
+                      x: 0,
+                      y: 0,
+                      rotateZ: 0,
+                      opacity: 1,
+                      scale: 1,
+                    }
+                }
 
-  transition={{
-    duration: isActive && isLeaving ? 0.5 : 0.2,
-    ease: isLeaving
-      ? [0.22, 1, 0.36, 1]
-      : "easeOut",
-  }}
+                transition={{
+                  duration: isActive && isLeaving ? 0.5 : 0.2,
+                  ease: isLeaving
+                    ? [0.22, 1, 0.36, 1]
+                    : "easeOut",
+                }}
 
-  onDragStart={() => {
-    if (isActive) {
-      setIsDragging(true);
-    }
-  }}
+                onDragStart={() => {
+                  if (isActive) {
+                    setIsDragging(true);
+                  }
+                }}
 
-  onDragEnd={
-    isActive
-      ? handleDragEnd
-      : undefined
-  }
+                onDragEnd={
+                  isActive
+                    ? handleDragEnd
+                    : undefined
+                }
 
-  onTap={() => {
-    if (
-      isActive &&
-      !isDragging &&
-      !isLeaving
-    ) {
-      setFlipped((prev) => !prev);
-    }
-  }}
->
+                onTap={() => {
+                  if (
+                    isActive &&
+                    !isDragging &&
+                    !isLeaving
+                  ) {
+                    setFlipped((prev) => !prev);
+                  }
+                }}
+              >
 
                 <TarotCardFace
                   card={card}

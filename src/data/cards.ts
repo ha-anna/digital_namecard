@@ -181,7 +181,7 @@ export const cards: TarotCardData[] = [
       name: "계속 더 나아가기",
       description: "믿고 함께 일할 수 있는 엔지니어가 되고 싶어요",
       back: {
-        heading: "만들면서 배우는 것들 ✦",
+        heading: "만들면서 배우는 것 ✦",
         description:
           "좋은 질문을 던지고, 빠르게 배우고, 맡은 일을 제대로 해내는 사람이 되고 싶어요. 언젠가는 다른 사람에게도 무언가를 알려줄 수 있는 엔지니어가 되고 싶고요.",
       },

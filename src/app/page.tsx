@@ -14,7 +14,7 @@ export default function Home() {
       h-dvh w-full
     ">
       <TarotCard />
-      <Stars/>
+      <Stars />
     </main>
   );
 }

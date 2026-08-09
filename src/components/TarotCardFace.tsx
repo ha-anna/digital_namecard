@@ -164,7 +164,7 @@ export default function TarotCardFace({
 
         <h2
           className=
-            {`
+          {`
             font-serif
             text-white
             mt-3
