@@ -11,7 +11,7 @@ export default function TarotCard() {
   const [isDragging, setIsDragging] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
   const [swipeDirection, setSwipeDirection] = useState(1);
-  const [language, setLanguage] = useState<"en" | "ko">("en");
+  const [language, setLanguage] = useState<"en" | "ko" | "pl">("en");
 
   function drawCard(direction: number) {
     if (isLeaving) return;
@@ -263,9 +263,7 @@ export default function TarotCard() {
       <button
         type="button"
         onClick={() =>
-          setLanguage((prev) =>
-            prev === "en" ? "ko" : "en"
-          )
+          setLanguage((prev) => prev === "en" ? "ko" : prev === "ko" ? "pl" : "en")
         }
         className="
           mt-10
@@ -285,7 +283,11 @@ export default function TarotCard() {
           active:scale-95
         "
       >
-        {language === "en" ? "한국어" : "EN"}
+        {language === "en"
+          ? "한국어"
+          : language === "ko"
+            ? "PL"
+            : "EN"}
       </button>
 
     </div>

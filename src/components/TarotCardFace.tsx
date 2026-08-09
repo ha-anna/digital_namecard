@@ -19,7 +19,7 @@ type CardContent = {
 type TarotCardFaceProps = {
   card: CardContent;
   flipped: boolean;
-  language: "en" | "ko";
+  language: "en" | "ko" | "pl";
 };
 
 export default function TarotCardFace({
@@ -234,8 +234,10 @@ export default function TarotCardFace({
           "
         >
           {language === "en"
-            ? "Swipe to draw another card"
-            : "스와이프해서 다음 카드 보기"}
+          ? "Swipe to draw another card"
+          : language === "ko"
+            ? "스와이프해서 다음 카드 보기"
+            : "Przesuń, aby wylosować kolejną kartę"}
         </p>
       </div>
     </motion.div>

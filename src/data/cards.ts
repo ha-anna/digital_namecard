@@ -12,6 +12,7 @@ export type TarotCardData = {
       }[];
     };
   };
+
   ko: {
     title: string;
     name: string;
@@ -25,7 +26,21 @@ export type TarotCardData = {
       }[];
     };
   };
-};
+
+  pl: {
+    title: string;
+    name: string;
+    description: string;
+    back: {
+      heading: string;
+      description: string;
+      links?: {
+        label: string;
+        href: string;
+      }[];
+    };
+  };
+}
 
 export const cards: TarotCardData[] = [
   {
@@ -39,7 +54,7 @@ export const cards: TarotCardData[] = [
           "I've always wanted to understand how things work. Then I realized I could actually learn to build them myself.",
         links: [
           {
-            label: "My website →",
+            label: "Portfolio →",
             href: "https://www.haanna.com/",
           },
           {
@@ -61,6 +76,27 @@ export const cards: TarotCardData[] = [
         links: [
           {
             label: "웹사이트 →",
+            href: "https://www.haanna.com/",
+          },
+          {
+            label: "LinkedIn →",
+            href: "https://www.linkedin.com/in/ha-anna/",
+          },
+        ],
+      },
+    },
+
+    pl: {
+      title: "THE SEEKER",
+      name: "Anna Ha",
+      description: "Studentka informatyki i inżynier, 3. rok, Seul",
+      back: {
+        heading: "Hej, to ja ✦",
+        description:
+          "Od zawsze chciałam rozumieć, jak działają różne rzeczy. W końcu odkryłam, że mogę też sama nauczyć się je tworzyć.",
+        links: [
+          {
+            label: "Portfolio →",
             href: "https://www.haanna.com/",
           },
           {
@@ -92,6 +128,17 @@ export const cards: TarotCardData[] = [
         heading: "어쩌다 여기까지 왔을까요? ✦",
         description:
           "언어를 공부한 뒤, 한국어 학습을 위한 AI 챗봇을 만드는 스타트업에서 소프트웨어 엔지니어로 일했어요. 그 경험을 통해 기술을 더 깊이 알아가고 싶어졌고, 결국 다시 학교로 돌아와 컴퓨터공학을 공부하게 됐어요.",
+      },
+    },
+
+    pl: {
+      title: "THE QUESTION",
+      name: "Mały skręt w bok",
+      description: "Języki → AI → Informatyka",
+      back: {
+        heading: "Jak się tu znalazłam? ✦",
+        description:
+          "Studiowałam języki, a potem zaczęłam pracę jako software engineer w startupie tworzącym chatbota AI do nauki koreańskiego. To doświadczenie sprawiło, że chciałam lepiej zrozumieć technologię, więc wróciłam na studia — tym razem na informatykę.",
       },
     },
   },
@@ -138,6 +185,27 @@ export const cards: TarotCardData[] = [
         ],
       },
     },
+
+    pl: {
+      title: "THE BUILDER",
+      name: "Lubię budować",
+      description: "Zwykle kiedy jakiś pomysł nie daje mi spokoju",
+      back: {
+        heading: "To, co buduję ✦",
+        description:
+          "Eksperymentuję z różnymi rzeczami - aplikacją na iOS, agentem AI, aparatem tworzącym zdjęcia w ASCII, modelem rozpoznającym ASL i timerem Pomodoro z kotami.",
+        links: [
+          {
+            label: "Zobacz projekty →",
+            href: "https://www.haanna.com/#projects",
+          },
+          {
+            label: "GitHub →",
+            href: "https://github.com/ha-anna",
+          },
+        ],
+      },
+    },
   },
 
   {
@@ -160,6 +228,17 @@ export const cards: TarotCardData[] = [
         heading: "만드는 이유 ✦",
         description:
           "새로운 기술을 써보는 것도 재미있지만, 제가 만든 것이 누군가에게 도움이 되거나 시간을 아껴주거나 무언가를 조금 더 편하게 만들어줄 때 가장 뿌듯해요.",
+      },
+    },
+
+    pl: {
+      title: "THE WHY",
+      name: "Tworzę po coś",
+      description: "Technologia jest środkiem, nie celem",
+      back: {
+        heading: "Po co to wszystko tworzę ✦",
+        description:
+          "Sama technologia jest ciekawa, ale największą satysfakcję daje mi moment, kiedy coś, co stworzyłam, naprawdę komuś pomaga lub po prostu ułatwia życie.",
       },
     },
   },
@@ -186,6 +265,17 @@ export const cards: TarotCardData[] = [
           "좋은 질문을 던지고, 빠르게 배우고, 맡은 일을 제대로 해내는 사람이 되고 싶어요. 언젠가는 다른 사람에게도 무언가를 알려줄 수 있는 엔지니어가 되고 싶고요.",
       },
     },
+
+    pl: {
+      title: "THE APPRENTICE",
+      name: "Ciągle się rozwijam",
+      description: "Chcę zostać inżynierką, na której można polegać",
+      back: {
+        heading: "Do czego dążę ✦",
+        description:
+          "Chcę być osobą, która zadaje dobre pytania, szybko się uczy i solidnie wykonuje swoją pracę. A z czasem chciałabym też mieć coś wartościowego do przekazania innym.",
+      },
+    },
   },
 
   {
@@ -208,6 +298,17 @@ export const cards: TarotCardData[] = [
         heading: "함께하고 싶은 곳 ✦",
         description:
           "똑똑한 사람들과 높은 기준을 가지고 일하고, 스스로 맡아서 해볼 수 있는 환경. 그리고 우리가 실제로 무엇을 만들고 있는지 함께 고민하는 팀.",
+      },
+    },
+
+    pl: {
+      title: "THE WORLD",
+      name: "Dobrzy ludzie, ciekawe problemy",
+      description: "Właśnie w takim środowisku chciałabym pracować",
+      back: {
+        heading: "Miejsce dla mnie ✦",
+        description:
+          "Ludzie, od których można się uczyć, wysokie standardy, zaufanie i przestrzeń na własną inicjatywę. I przede wszystkim zespół, któremu zależy na tym, co wspólnie tworzymy.",
       },
     },
   },
@@ -238,6 +339,23 @@ export const cards: TarotCardData[] = [
         heading: "다음 모험을 찾는 중 ✦",
         description:
           "지금은 좋은 사람들에게 배우고, 실제 문제를 해결하고, 더 큰 무언가에 기여할 수 있는 소프트웨어 엔지니어링 인턴십을 찾고 있어요.",
+        links: [
+          {
+            label: "LinkedIn →",
+            href: "https://www.linkedin.com/in/ha-anna/",
+          },
+        ],
+      },
+    },
+
+    pl: {
+      title: "THE HORIZON",
+      name: "Co dalej?",
+      description: "Szukam miejsca, gdzie mogę wykorzystać swoją ciekawość",
+      back: {
+        heading: "Szukam kolejnego wyzwania ✦",
+        description:
+          "Chciałabym trafić do zespołu, od którego mogłabym się dużo nauczyć i z którym mogłabym pracować nad czymś naprawdę ciekawym.",
         links: [
           {
             label: "LinkedIn →",
