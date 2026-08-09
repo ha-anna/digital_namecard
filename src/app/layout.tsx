@@ -13,21 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ha Anna | The Builder | The Creator | The Explorer",
+  title: "Ha Anna | The Builder ",
   description: "Get to know all sides of Ha Anna",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="h-full">
+      <body className="h-full overflow-hidden">
         {children}
       </body>
     </html>

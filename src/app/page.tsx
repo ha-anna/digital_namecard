@@ -11,6 +11,7 @@ export default function Home() {
       items-center
       justify-center
       overflow-hidden
+      h-dvh w-full
     ">
       <TarotCard />
       <Stars/>

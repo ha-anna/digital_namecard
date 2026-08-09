@@ -1,45 +1,89 @@
 "use client";
 
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { useState } from "react";
 import { cards } from "@/data/cards";
+import TarotCardFace from "./TarotCardFace";
 
 export default function TarotCard() {
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isLeaving, setIsLeaving] = useState(false);
+  const [swipeDirection, setSwipeDirection] = useState(1);
   const [language, setLanguage] = useState<"en" | "ko">("en");
 
-  const card = cards[index][language];
+function drawCard(direction: number) {
+  if (isLeaving) return;
 
-  function drawCard() {
-    setFlipped(false);
+  setSwipeDirection(direction);
+  setIsLeaving(true);
+
+  setTimeout(() => {
     setIndex((prev) => (prev + 1) % cards.length);
+    setFlipped(false);
+    setIsLeaving(false);
+  }, 500);
+}
+
+function handleDragEnd(
+  _: MouseEvent | TouchEvent | PointerEvent,
+  info: {
+    offset: { x: number; y: number };
+    velocity: { x: number; y: number };
+  }
+) {
+  setIsDragging(false);
+
+  if (isLeaving) return;
+
+  const { x, y } = info.offset;
+  const { x: velocityX, y: velocityY } = info.velocity;
+
+  const distanceThreshold = 70;
+  const velocityThreshold = 400;
+
+  const horizontalSwipe =
+    Math.abs(x) > distanceThreshold ||
+    Math.abs(velocityX) > velocityThreshold;
+
+  const verticalSwipe =
+    Math.abs(y) > distanceThreshold ||
+    Math.abs(velocityY) > velocityThreshold;
+
+  if (!horizontalSwipe && !verticalSwipe) {
+    return;
   }
 
-  function handleDragEnd(
-    _: MouseEvent | TouchEvent | PointerEvent,
-    info: { offset: { x: number; y: number } }
-  ) {
-    setIsDragging(false);
+  let direction = 1;
 
-    const threshold = 80;
-
-    const swiped =
-      Math.abs(info.offset.x) > threshold ||
-      Math.abs(info.offset.y) > threshold;
-
-    if (swiped) {
-      drawCard();
-    }
+  if (Math.abs(x) >= Math.abs(y)) {
+    direction =
+      x >= 0 || velocityX >= 0
+        ? 1
+        : -1;
+  } else {
+    direction =
+      y >= 0 || velocityY >= 0
+        ? 1
+        : -1;
   }
+
+  drawCard(direction);
+}
 
   return (
     <div className="flex flex-col items-center">
 
-      {/* Card */}
+      {/* ================= DECK ================= */}
+
       <motion.div
-        className="relative w-72 h-[420px] [perspective:1000px]"
+        className="
+          relative
+          w-72
+          h-[420px]
+          [perspective:1000px]
+        "
         animate={{
           y: [-8, 8, -8],
           rotateZ: [-0.5, 0.5, -0.5],
@@ -51,7 +95,8 @@ export default function TarotCard() {
         }}
       >
 
-        {/* Magical glow */}
+        {/* ================= GLOW ================= */}
+
         <motion.div
           className="
             absolute
@@ -64,7 +109,6 @@ export default function TarotCard() {
           animate={{
             opacity: [0.25, 0.6, 0.25],
             scale: [0.9, 1.15, 0.9],
-            y: [-10, 10, -10],
           }}
           transition={{
             duration: 4,
@@ -73,285 +117,155 @@ export default function TarotCard() {
           }}
         />
 
-        {/* Cards behind */}
-        {cards
-          .slice(index + 1)
-          .concat(cards.slice(0, index))
-          .slice(0, 3)
-          .map((_, i) => (
+        {/* ================= DECK ================= */}
+
+        {cards.map((_, i) => {
+          const distance =
+            (i - index + cards.length) %
+            cards.length;
+
+          if (distance > 3) {
+            return null;
+          }
+
+          const card = cards[i][language];
+          const isActive = distance === 0;
+
+          return (
             <motion.div
               key={i}
               className="
                 absolute
                 inset-0
                 rounded-3xl
-                border
-                border-purple-500/20
-                bg-[#10081a]
               "
               style={{
-                zIndex: cards.length - i,
-              }}
-              animate={{
-                y: -(i + 1) * 10,
-                scale: 1 - (i + 1) * 0.035,
-                rotateZ: (i + 1) * -1,
-              }}
-            />
-          ))}
-
-        {/* Active card */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={index}
-            className="absolute inset-0"
-            style={{
-              zIndex: 100,
-              transformStyle: "preserve-3d",
-            }}
-            initial={{
-              opacity: 0,
-              y: 80,
-              scale: 0.8,
-              rotateZ: -15,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              rotateZ: 0,
-            }}
-            exit={{
-              opacity: 0,
-              y: -200,
-              scale: 1.15,
-              rotateZ: 20,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 120,
-              damping: 12,
-            }}
-            drag
-            dragElastic={0.7}
-            dragConstraints={{
-              left: -100,
-              right: 100,
-              top: -100,
-              bottom: 100,
-            }}
-            whileDrag={{
-              scale: 1.05,
-            }}
-            onDragStart={() => {
-              setIsDragging(true);
-            }}
-            onDragEnd={handleDragEnd}
-            onTap={() => {
-              if (!isDragging) {
-                setFlipped((prev) => !prev);
-              }
-            }}
-          >
-
-            {/* Inner card */}
-            <motion.div
-              className="absolute inset-0"
-              animate={{
-                rotateY: flipped ? 180 : 0,
-              }}
-              transition={{
-                duration: 0.7,
-                ease: "easeInOut",
-              }}
-              style={{
+                zIndex: 100 - distance,
                 transformStyle: "preserve-3d",
+              }}
+
+              animate={{
+                  y:
+                    isLeaving && distance === 1
+                      ? 0
+                      : distance * -10,
+
+                  scale:
+                    isLeaving && distance === 1
+                      ? 1
+                      : 1 - distance * 0.035,
+
+                  rotateZ:
+                    isLeaving && distance === 1
+                      ? 0
+                      : distance * -1,
+                }}
+
+             transition={{
+                duration:
+                  isLeaving && distance === 1
+                    ? 0.5
+                    : 0.5,
+
+                ease: [0.22, 1, 0.36, 1],
               }}
             >
 
-              {/* ================= FRONT ================= */}
+              {/* ================= CARD ================= */}
 
-              <div
-                className="
-                  absolute
-                  inset-0
-                  rounded-3xl
-                  border
-                  border-purple-400/50
-                  bg-gradient-to-br
-                  from-[#211033]
-                  via-[#12091f]
-                  to-[#080510]
-                  shadow-[0_0_60px_rgba(139,92,246,0.25)]
-                  flex
-                  items-center
-                  justify-center
-                  p-8
-                  overflow-hidden
-                "
-                style={{
-                  backfaceVisibility: "hidden",
-                }}
-              >
-                <div className="text-center w-full">
+              <motion.div
+  className="
+    absolute
+    inset-0
+    touch-none
+  "
+  drag={isActive && !isLeaving}
+  dragElastic={0.35}
+  dragMomentum={false}
 
-                  {/* Card type */}
-                  <div
-                    className="
-                      text-purple-300
-                      text-xs
-                      tracking-[0.3em]
-                      font-medium
-                    "
-                  >
-                    ✦ {card.title} ✦
-                  </div>
+  whileDrag={
+    isActive
+      ? {
+          scale: 1.04,
+          rotateZ: 2,
+        }
+      : undefined
+  }
 
-                  {/* Name */}
-                  <h1
-                    className="
-                      mt-7
-                      text-4xl
-                      font-serif
-                      text-white
-                      leading-tight
-                    "
-                  >
-                    {card.name}
-                  </h1>
+  animate={
+    isActive && isLeaving
+      ? {
+          x: swipeDirection * 600,
+          y: -80,
+          rotateZ: swipeDirection * 20,
+          opacity: 0,
+          scale: 0.9,
+        }
+      : {
+          x: 0,
+          y: 0,
+          rotateZ: 0,
+          opacity: 1,
+          scale: 1,
+        }
+  }
 
-                  {/* Description */}
-                  <p
-                    className="
-                      mt-5
-                      mx-auto
-                      max-w-[220px]
-                      text-base
-                      leading-relaxed
-                      text-zinc-300
-                    "
-                  >
-                    {card.description}
-                  </p>
+  transition={{
+    duration: isActive && isLeaving ? 0.5 : 0.2,
+    ease: isLeaving
+      ? [0.22, 1, 0.36, 1]
+      : "easeOut",
+  }}
 
-                  {/* Hint */}
-                  <p
-                    className="
-                      mt-10
-                      text-xs
-                      tracking-wide
-                      text-purple-300/60
-                    "
-                  >
-                    {language === "en"
-                      ? "Tap to reveal ✦"
-                      : "탭해서 펼쳐보기 ✦"}
-                  </p>
+  onDragStart={() => {
+    if (isActive) {
+      setIsDragging(true);
+    }
+  }}
 
-                </div>
-              </div>
+  onDragEnd={
+    isActive
+      ? handleDragEnd
+      : undefined
+  }
 
-              {/* ================= BACK ================= */}
+  onTap={() => {
+    if (
+      isActive &&
+      !isDragging &&
+      !isLeaving
+    ) {
+      setFlipped((prev) => !prev);
+    }
+  }}
+>
 
-              <div
-                className="
-                  absolute
-                  inset-0
-                  rounded-3xl
-                  border
-                  border-purple-400/50
-                  bg-gradient-to-br
-                  from-[#160b24]
-                  via-[#10071a]
-                  to-[#080510]
-                  shadow-[0_0_60px_rgba(139,92,246,0.25)]
-                  p-8
-                  flex
-                  flex-col
-                  justify-center
-                "
-                style={{
-                  backfaceVisibility: "hidden",
-                  transform: "rotateY(180deg)",
-                }}
-              >
+                <TarotCardFace
+                  card={card}
+                  flipped={
+                    isActive
+                      ? flipped
+                      : false
+                  }
+                  language={language}
+                />
 
-                <p
-                  className="
-                    text-purple-300
-                    text-sm
-                    tracking-[0.3em]
-                  "
-                >
-                  ✦ {language === "en" ? "REVEALED" : "REVEALED"} ✦
-                </p>
-
-                <h2
-                  className="
-                    text-2xl
-                    font-serif
-                    text-white
-                    mt-6
-                  "
-                >
-                  {card.back.heading}
-                </h2>
-
-                <p
-                  className="
-                    text-zinc-400
-                    mt-4
-                    leading-relaxed
-                  "
-                >
-                  {card.back.description}
-                </p>
-
-                {/* Links */}
-                <div className="mt-8 space-y-3">
-                  {card.back.links?.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="
-                        block
-                        text-purple-300
-                        hover:text-purple-200
-                        transition-colors
-                      "
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-
-                {/* Hint */}
-                <p
-                  className="
-                    mt-8
-                    text-xs
-                    text-purple-400/40
-                  "
-                >
-                  {language === "en"
-                    ? "Swipe to draw another card"
-                    : "스와이프해서 다음 카드 보기"}
-                </p>
-
-              </div>
+              </motion.div>
 
             </motion.div>
-          </motion.div>
-        </AnimatePresence>
+          );
+        })}
+
       </motion.div>
 
-       {/* Language switcher */}
+      {/* ================= LANGUAGE ================= */}
+
       <button
+        type="button"
         onClick={() =>
-          setLanguage((prev) => (prev === "en" ? "ko" : "en"))
+          setLanguage((prev) =>
+            prev === "en" ? "ko" : "en"
+          )
         }
         className="
           mt-10
@@ -368,6 +282,7 @@ export default function TarotCard() {
           transition
           hover:border-purple-300/50
           hover:bg-purple-900/40
+          active:scale-95
         "
       >
         {language === "en" ? "한국어" : "EN"}

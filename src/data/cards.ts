@@ -123,7 +123,7 @@ export const cards: TarotCardData[] = [
       name: "직접 만들어 봐요",
       description: "한번 떠오른 아이디어는 직접 해봐야 직성이 풀려요",
       back: {
-        heading: "이것저것 파고든 것들 ✦",
+        heading: "호기심이 만든 것들 ✦",
         description:
           "iOS 앱부터 AI 지식 에이전트, ASCII 아트 카메라, ASL 인식 모델, 고양이가 나오는 뽀모도로 타이머까지 이것저것 만들어 봤어요.",
         links: [
@@ -181,7 +181,7 @@ export const cards: TarotCardData[] = [
       name: "계속 더 나아가기",
       description: "믿고 함께 일할 수 있는 엔지니어가 되고 싶어요",
       back: {
-        heading: "제가 만들어 가고 있는 모습 ✦",
+        heading: "만들면서 배우는 것들 ✦",
         description:
           "좋은 질문을 던지고, 빠르게 배우고, 맡은 일을 제대로 해내는 사람이 되고 싶어요. 언젠가는 다른 사람에게도 무언가를 알려줄 수 있는 엔지니어가 되고 싶고요.",
       },
@@ -202,10 +202,10 @@ export const cards: TarotCardData[] = [
 
     ko: {
       title: "THE WORLD",
-      name: "좋은 사람들, 어려운 문제들",
+      name: "좋은 팀, 좋은 문제들",
       description: "아마 이런 곳에서 가장 잘할 수 있을 것 같아요",
       back: {
-        heading: "제가 좋아하는 환경 ✦",
+        heading: "함께하고 싶은 곳 ✦",
         description:
           "똑똑한 사람들과 높은 기준을 가지고 일하고, 스스로 맡아서 해볼 수 있는 환경. 그리고 우리가 실제로 무엇을 만들고 있는지 함께 고민하는 팀.",
       },
