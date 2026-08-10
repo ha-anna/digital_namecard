@@ -138,6 +138,7 @@ export default function TarotCard() {
                 absolute
                 inset-0
                 rounded-3xl
+                shadow-[0_0_60px_rgba(139,92,246,0.25)]
               "
               style={{
                 zIndex: 100 - distance,
@@ -175,10 +176,10 @@ export default function TarotCard() {
 
               <motion.div
                 className="
-    absolute
-    inset-0
-    touch-none
-  "
+                  absolute
+                  inset-0
+                  touch-none
+                "
                 drag={isActive && !isLeaving}
                 dragElastic={0.35}
                 dragMomentum={false}

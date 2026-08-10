@@ -56,7 +56,6 @@ export default function TarotCardFace({
           from-[#211033]
           via-[#12091f]
           to-[#080510]
-          shadow-[0_0_60px_rgba(139,92,246,0.25)]
           flex
           items-center
           justify-center
